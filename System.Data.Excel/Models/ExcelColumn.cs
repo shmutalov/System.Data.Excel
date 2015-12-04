@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.SqlServer.Server;
@@ -18,14 +19,15 @@ namespace System.Data.Excel.Models
         }
 
         public ExcelColumn(string name)
+            : this()
         {
             Name = name;
         }
 
         public ExcelColumn(ExcelTable table, string name)
+            : this(name)
         {
             Table = table;
-            Name = name;
         }
 
         /// <summary>

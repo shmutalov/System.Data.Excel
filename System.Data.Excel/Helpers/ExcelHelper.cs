@@ -21,7 +21,7 @@ namespace System.Data.Excel.Helpers
             var typesDict = new Dictionary<Type, int>();
             var result = typeof(string);
 
-            if (columnId >= dataTypes.GetLength(1))
+            if (rows == 0 || columnId >= dataTypes[0].Length)
                 return result;
 
             for (var rowId = 0; rowId < rows; rowId++)

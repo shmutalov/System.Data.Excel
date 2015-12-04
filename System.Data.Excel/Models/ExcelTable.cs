@@ -13,10 +13,11 @@ namespace System.Data.Excel.Models
     {
         public ExcelTable()
         {
-            
+            Columns = new List<ExcelColumn>();
         }
 
         public ExcelTable(string name)
+            :this()
         {
             Name = name;
         }
@@ -26,6 +27,6 @@ namespace System.Data.Excel.Models
         /// </summary>
         public string Name { get; set; }
 
-        public List<ExcelColumn> Columns => new List<ExcelColumn>();
+        public List<ExcelColumn> Columns { get; }
     }
 }

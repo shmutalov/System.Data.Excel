@@ -104,12 +104,8 @@ namespace System.Data.Excel
         /// </summary>
         /// <param name="connectionString"></param>
         public ExcelConnection(string connectionString)
+            : this()
         {
-            _state = ConnectionState.Closed;
-
-            // initialize default storage
-            _storage = new SqliteStorage();
-
             InitSettings(connectionString);
         }
 

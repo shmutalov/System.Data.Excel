@@ -22,6 +22,14 @@ namespace System.Data.Excel.Test
             {
                 connection.Open();
 
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT 1";
+                    var value = cmd.ExecuteScalar();
+
+                    Assert.AreEqual(1, value);
+                }
+
                 connection.Close();
             }
         }
