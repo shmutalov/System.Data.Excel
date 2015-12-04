@@ -33,5 +33,24 @@ namespace System.Data.Excel.Test
                 connection.Close();
             }
         }
+
+        [Test]
+        public void TestExcelConnectionToLargeFile()
+        {
+            using (var connection = new ExcelConnection(string.Format(ConnectionStringTemplate, LargeExcelFile)))
+            {
+                connection.Open();
+
+                using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT 1";
+                    var value = cmd.ExecuteScalar();
+
+                    Assert.AreEqual(1, value);
+                }
+
+                connection.Close();
+            }
+        }
     }
 }

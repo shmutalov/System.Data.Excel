@@ -26,7 +26,12 @@ namespace System.Data.Excel.Helpers
 
             for (var rowId = 0; rowId < rows; rowId++)
             {
-                var type = dataTypes[rowId][columnId].GetType();
+                var value = dataTypes[rowId][columnId];
+
+                if (value == null)
+                    continue;
+
+                var type = value.GetType();
 
                 if (!typesDict.ContainsKey(type))
                     typesDict[type] = 0;
@@ -34,8 +39,9 @@ namespace System.Data.Excel.Helpers
                 typesDict[type]++;
             }
 
-            result = typesDict.Aggregate((l, r) => l.Value > r.Value ? l : r).Key
-                ?? typeof(string);
+            if (typesDict.Count > 0)
+                result = typesDict.Aggregate((l, r) => l.Value > r.Value ? l : r).Key
+                    ?? typeof(string);
 
             return result;
         }
