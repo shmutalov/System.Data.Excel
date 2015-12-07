@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\ExcelConnectionParameterNames.cs" />
+    <Compile Include="Enums\ExcelColumnDataTypeAnalysisMethod.cs" />
     <Compile Include="Enums\ExcelDocumentType.cs" />
     <Compile Include="ExcelConnection.cs">
       <SubType>Component</SubType>

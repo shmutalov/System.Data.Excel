@@ -34,5 +34,16 @@
         /// Forces internal storage to reinitialize
         /// </summary>
         public const string ForceStorageReload = "FORCESTORAGERELOAD";
+
+        /// <summary>
+        /// Column data type analysis method
+        /// </summary>
+        public const string AnalysisMethod = "ANALYSISMETHOD";
+
+        /// <summary>
+        /// Rows count to analyse
+        /// </summary>
+        public const string RowsToAnalyse = "ROWSTOANALYSE";
+
     }
 }

@@ -14,7 +14,7 @@ namespace System.Data.Excel.Test
         private const string SmallExcelFile = @"C:\Superstore_Locked.xlsx";
         private const string LargeExcelFile = @"C:\AWLArge_FactInternetSales_1M.xlsx";
 
-        private const string ConnectionStringTemplate = "Database={0};Type=Xml;Password=;FirstRowIsHeader=True;StorageDir=;ForceStorageReload=True";
+        private const string ConnectionStringTemplate = "Database={0};Type=Xml;Password=;FirstRowIsHeader=True;StorageDir=;ForceStorageReload=True;AnalysisMethod=BestMatch;RowsToAnalyse=50";
 
         [Test]
         public void TestExcelConnectionToSmallFile()

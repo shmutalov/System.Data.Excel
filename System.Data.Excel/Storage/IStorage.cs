@@ -1,4 +1,5 @@
-﻿using Excel;
+﻿using System.Data.Excel.Models;
+using Excel;
 using JetBrains.Annotations;
 
 namespace System.Data.Excel.Storage
@@ -61,9 +62,12 @@ namespace System.Data.Excel.Storage
         /// Imports data from Excel to storage
         /// </summary>
         /// <param name="sourceReader"></param>
-        /// <param name="firstRowIsHeader"></param>
+        /// <param name="parameters"></param>
         /// <param name="storageConnection"></param>
-        void ImportData([NotNull] IExcelDataReader sourceReader, bool firstRowIsHeader, [NotNull] IDbConnection storageConnection);
+        void ImportData(
+            [NotNull] IExcelDataReader sourceReader, 
+            [NotNull] ExcelConnectionParameters parameters, 
+            [NotNull] IDbConnection storageConnection);
 
         /// <summary>
         /// Convert excel data type to storage specific data type

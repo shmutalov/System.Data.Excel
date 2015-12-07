@@ -105,12 +105,12 @@ namespace System.Data.Excel.Storage
             }
         }
 
-        public void ImportData(IExcelDataReader sourceReader, bool firstRowIsHeader, IDbConnection storageConnection)
+        public void ImportData(IExcelDataReader sourceReader, ExcelConnectionParameters parameters, IDbConnection storageConnection)
         {
             do
             {
                 List<object[]> preloadedValues;
-                var table = ExcelHelper.GetTable(sourceReader, firstRowIsHeader, out preloadedValues);
+                var table = ExcelHelper.GetTable(sourceReader, parameters.FirstRowIsHeader, parameters.AnalysisMethod, parameters.RowsToAnalyse, out preloadedValues);
 
                 CreateTable((SQLiteConnection)storageConnection, table);
 

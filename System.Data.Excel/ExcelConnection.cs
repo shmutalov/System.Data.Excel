@@ -157,7 +157,7 @@ namespace System.Data.Excel
 
                         var sourceReader = GetExcelReader();
 
-                        _storage.ImportData(sourceReader, _parameters.FirstRowIsHeader, tempStorageConnection);
+                        _storage.ImportData(sourceReader, _parameters, tempStorageConnection);
 
                         tempStorageConnection.Close();
                     }
