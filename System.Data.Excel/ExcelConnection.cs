@@ -214,6 +214,10 @@ namespace System.Data.Excel
                 {
                     _storageConnection?.Close();
                 }
+                catch (Exception)
+                {
+                    // ignore
+                }
                 finally
                 {
                     _storageInitialized = false;
