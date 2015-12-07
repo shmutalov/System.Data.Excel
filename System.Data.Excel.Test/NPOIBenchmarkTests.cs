@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region Copyright
+
+/*
+	Copyright (c) Sherzod Mutalov, 2015
+	mailto:shmutalov@gmail.com
+*/
+
+#endregion
+
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NPOI.OpenXml4Net.OPC;
 using NPOI.SS.UserModel;
-using NPOI.XSSF.Model;
 using NPOI.XSSF.UserModel;
-using NPOI.XSSF.Extractor;
 using NUnit.Framework;
 
 namespace System.Data.Excel.Test

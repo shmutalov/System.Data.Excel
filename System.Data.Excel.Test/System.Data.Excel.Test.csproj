@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="System.Data.Excel.Test.licenseheader" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\System.Data.Excel\System.Data.Excel.csproj">

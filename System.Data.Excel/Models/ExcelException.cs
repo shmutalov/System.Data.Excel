@@ -1,8 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region Copyright
+
+/*
+	Copyright (c) Sherzod Mutalov, 2015
+	mailto:shmutalov@gmail.com
+*/
+
+#endregion
+
 using JetBrains.Annotations;
 
 namespace System.Data.Excel.Models

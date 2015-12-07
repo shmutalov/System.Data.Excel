@@ -1,4 +1,13 @@
-﻿using System.Data.Common;
+﻿#region Copyright
+
+/*
+	Copyright (c) Sherzod Mutalov, 2015
+	mailto:shmutalov@gmail.com
+*/
+
+#endregion
+
+using System.Data.Common;
 using System.Data.Excel.Enums;
 using System.Data.Excel.Models;
 using System.Data.Excel.Storage;

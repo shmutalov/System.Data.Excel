@@ -1,4 +1,13 @@
-﻿using System.Reflection;
+﻿#region Copyright
+
+/*
+	Copyright (c) Sherzod Mutalov, 2015
+	mailto:shmutalov@gmail.com
+*/
+
+#endregion
+
+using System.Reflection;
 
 namespace System.Data.Excel.Extensions
 {

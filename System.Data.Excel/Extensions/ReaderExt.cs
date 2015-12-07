@@ -1,4 +1,13 @@
-﻿using System.Data.Excel.Enums;
+﻿#region Copyright
+
+/*
+	Copyright (c) Sherzod Mutalov, 2015
+	mailto:shmutalov@gmail.com
+*/
+
+#endregion
+
+using System.Data.Excel.Enums;
 using Excel;
 
 namespace System.Data.Excel.Extensions

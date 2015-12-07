@@ -1,4 +1,13 @@
-﻿namespace System.Data.Excel.Constants
+﻿#region Copyright
+
+/*
+	Copyright (c) Sherzod Mutalov, 2015
+	mailto:shmutalov@gmail.com
+*/
+
+#endregion
+
+namespace System.Data.Excel.Constants
 {
     /// <summary>
     /// Excel datasource connection string parameter names

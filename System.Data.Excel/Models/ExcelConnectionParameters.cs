@@ -1,4 +1,13 @@
-﻿using System.Data.Excel.Constants;
+﻿#region Copyright
+
+/*
+	Copyright (c) Sherzod Mutalov, 2015
+	mailto:shmutalov@gmail.com
+*/
+
+#endregion
+
+using System.Data.Excel.Constants;
 using System.Data.Excel.Enums;
 using System.Data.Excel.Extensions;
 

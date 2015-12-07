@@ -1,4 +1,13 @@
-﻿using System.Collections.Generic;
+﻿#region Copyright
+
+/*
+	Copyright (c) Sherzod Mutalov, 2015
+	mailto:shmutalov@gmail.com
+*/
+
+#endregion
+
+using System.Collections.Generic;
 using System.Data.Excel.Extensions;
 using System.Data.Excel.Helpers;
 using System.Data.Excel.Models;

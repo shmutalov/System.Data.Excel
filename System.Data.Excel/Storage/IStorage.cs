@@ -1,4 +1,13 @@
-﻿using System.Data.Excel.Models;
+﻿#region Copyright
+
+/*
+	Copyright (c) Sherzod Mutalov, 2015
+	mailto:shmutalov@gmail.com
+*/
+
+#endregion
+
+using System.Data.Excel.Models;
 using Excel;
 using JetBrains.Annotations;
 
