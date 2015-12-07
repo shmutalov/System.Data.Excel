@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Data.Excel.Extensions;
 using System.Data.Excel.Helpers;
 using System.Data.Excel.Models;
 using System.Data.SQLite;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Excel;
 
@@ -15,6 +17,8 @@ namespace System.Data.Excel.Storage
     {
         private const string DatabaseNameTemplate = "{0}.db3";
         private const string ConnectionStringTemplate = "Data Source={0};Version=3;";
+
+        private const int BatchSize = 10000;
 
         public string GetConnectionString(string database, string user, string password)
         {
@@ -57,6 +61,50 @@ namespace System.Data.Excel.Storage
             return File.Exists(Path.Combine(storageDir, database));
         }
 
+        private void Upload(ExcelTable table, IDbConnection storageConnection, object[][] values)
+        {
+            var sb = new StringBuilder();
+
+            #region SQLite upload settings
+
+            sb.AppendLine(@"PRAGMA synchronous=OFF;");
+            sb.AppendLine(@"PRAGMA count_changes=OFF;");
+            sb.AppendLine(@"PRAGMA journal_mode=MEMORY;");
+            sb.AppendLine(@"PRAGMA temp_store=MEMORY;");
+            sb.AppendLine(@"PRAGMA encoding=""UTF-8"";");
+
+            #endregion
+
+            sb.AppendLine(@"BEGIN;");
+
+            #region INSERT INTO statement
+
+            sb.AppendFormat(
+                @"INSERT INTO `{0}`({1})", 
+                table.Name,
+                string.Join(",", table.Columns.Select(
+                    column => string.Format("`{0}`", column.Name))));
+
+            sb.AppendLine();
+
+            sb.AppendFormat(
+                " VALUES {0}",
+                string.Join(",\n", values.Select(
+                    value => string.Format("({0})", string.Join(",", value)))));
+
+            sb.AppendLine(";");
+            
+            #endregion
+
+            sb.AppendLine(@"COMMIT;");
+
+            using (var cmd = storageConnection.CreateCommand())
+            {
+                cmd.CommandText = sb.ToString();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
         public void ImportData(IExcelDataReader sourceReader, bool firstRowIsHeader, IDbConnection storageConnection)
         {
             do
@@ -66,12 +114,44 @@ namespace System.Data.Excel.Storage
 
                 CreateTable((SQLiteConnection)storageConnection, table);
 
-                // upload preloaded values
+                if (preloadedValues == null ||
+                    preloadedValues.Count == 0)
+                    preloadedValues = new List<object[]>();
+
+                // format preloaded values
+                foreach (var values in preloadedValues)
+                {
+                    for (var columnId = 0; columnId < table.Columns.Count; columnId++)
+                    {
+                        values[columnId] = ToStorageValue(table.Columns[columnId].DataType, values[columnId]);
+                    }
+                }
 
                 while (sourceReader.Read())
                 {
-                    // ignore
+                    var values = new object[table.Columns.Count];
+
+                    sourceReader._GetValues(values);
+
+                    for (var columnId = 0; columnId < table.Columns.Count; columnId++)
+                    {
+                        values[columnId] = ToStorageValue(table.Columns[columnId].DataType, 
+                            sourceReader.GetValue(columnId));
+                    }
+
+                    preloadedValues.Add(values);
+
+                    if (preloadedValues.Count < BatchSize)
+                        continue;
+
+                    Upload(table, storageConnection, preloadedValues.ToArray());
+                    preloadedValues.Clear();
                 }
+
+                // upload last rows if exists
+                if (preloadedValues.Count > 0)
+                    Upload(table, storageConnection, preloadedValues.ToArray());
+
             } while (sourceReader.NextResult());
         }
 
@@ -104,6 +184,41 @@ namespace System.Data.Excel.Storage
                     break;
                 default:
                     result = "TEXT";
+                    break;
+            }
+
+            return result;
+        }
+
+        private static object ToStorageValue(Type type, object value)
+        {
+            object result;
+
+            if (value == null || 
+                value == DBNull.Value)
+                return "NULL";
+
+            switch (Type.GetTypeCode(type))
+            {
+                case TypeCode.Boolean:
+                case TypeCode.SByte:
+                case TypeCode.Byte:
+                case TypeCode.Int16:
+                case TypeCode.UInt16:
+                case TypeCode.Int32:
+                case TypeCode.UInt32:
+                case TypeCode.Int64:
+                case TypeCode.UInt64:
+                case TypeCode.Single:
+                case TypeCode.Double:
+                case TypeCode.Decimal:
+                    result = value;
+                    break;
+                case TypeCode.DateTime:
+                    result = string.Format("'{0}'", Convert.ToDateTime(value).ToString("yyyy-MM-dd hh:mm:ss"));
+                    break;
+                default:
+                    result = string.Format("'{0}'", value.ToString().Replace("'", "''"));
                     break;
             }
 

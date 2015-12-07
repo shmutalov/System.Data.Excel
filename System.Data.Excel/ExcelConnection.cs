@@ -137,7 +137,12 @@ namespace System.Data.Excel
         {
             var database = _storage.GetDatabaseName(_parameters.Database, _storegeDir);
 
-            if (!_storage.DatabaseExists(database, _storegeDir))
+            // Drop existing database, if ForceStorageReload is set
+            if (_parameters.ForceStorageReload)
+                _storage.DropDatabase(database, _storegeDir);
+
+            if (!_storage.DatabaseExists(database, _storegeDir) ||
+                _parameters.ForceStorageReload)
             {
                 try
                 {

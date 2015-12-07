@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Excel.Constants;
+﻿using System.Data.Excel.Constants;
 using System.Data.Excel.Enums;
 using System.Data.Excel.Extensions;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace System.Data.Excel.Models
 {
@@ -38,6 +33,11 @@ namespace System.Data.Excel.Models
         /// First row of tables are table column names
         /// </summary>
         public bool FirstRowIsHeader { get; set; }
+
+        /// <summary>
+        /// Forces reload all data of internal storage
+        /// </summary>
+        public bool ForceStorageReload { get; set; }
 
         /// <summary>
         /// Build connection parameters by parsing connection string
@@ -79,6 +79,9 @@ namespace System.Data.Excel.Models
                             break;
                         case ExcelConnectionParameterNames.FirstRowIsHeader:
                             parameters.FirstRowIsHeader = splittedKeyVal[1].ToBool();
+                            break;
+                        case ExcelConnectionParameterNames.ForceStorageReload:
+                            parameters.ForceStorageReload = splittedKeyVal[1].ToBool();
                             break;
                         default:
                             continue;

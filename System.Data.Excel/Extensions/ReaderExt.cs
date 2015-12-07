@@ -44,5 +44,27 @@ namespace System.Data.Excel.Extensions
 
             reader.Reset();
         }
+
+        /// <summary>
+        /// IExcelData reader doesn't implement GetValues method,
+        /// we implement it here
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="values"></param>
+        /// <returns></returns>
+        public static int _GetValues(this IExcelDataReader reader, object[] values)
+        {
+            if (reader.FieldCount <= 0)
+            {
+                return reader.FieldCount;
+            }
+
+            for (var fieldId = 0; fieldId < reader.FieldCount; fieldId++)
+            {
+                values[fieldId] = reader.GetValue(fieldId);
+            }
+
+            return reader.FieldCount;
+        }
     }
 }

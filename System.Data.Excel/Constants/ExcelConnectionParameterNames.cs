@@ -29,5 +29,10 @@
         /// First row of tables is header
         /// </summary>
         public const string FirstRowIsHeader = "FIRSTROWISHEADER";
+
+        /// <summary>
+        /// Forces internal storage to reinitialize
+        /// </summary>
+        public const string ForceStorageReload = "FORCESTORAGERELOAD";
     }
 }
