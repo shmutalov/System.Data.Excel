@@ -214,6 +214,10 @@ namespace System.Data.Excel
                 {
                     _storageConnection?.Close();
                 }
+                catch (ObjectDisposedException)
+                {
+                    // ignore
+                }
                 catch (Exception)
                 {
                     // ignore
@@ -334,6 +338,7 @@ namespace System.Data.Excel
         public new void Dispose()
         {
             base.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         protected override void Dispose(bool disposing)
@@ -352,6 +357,11 @@ namespace System.Data.Excel
                 base.Dispose(disposing);
                 _disposed = true;
             }
+        }
+
+        ~ExcelConnection()
+        {
+            Dispose(false);
         }
 
         #endregion
