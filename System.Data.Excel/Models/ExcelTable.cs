@@ -8,12 +8,14 @@
 #endregion
 
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace System.Data.Excel.Models
 {
     /// <summary>
     /// Represents Excel table
     /// </summary>
+    [DefaultProperty("Name")]
     internal class ExcelTable
     {
         public ExcelTable()
