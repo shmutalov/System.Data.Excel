@@ -8,6 +8,7 @@
 #endregion
 
 using System.ComponentModel;
+using JetBrains.Annotations;
 
 namespace System.Data.Excel.Models
 {
@@ -22,13 +23,13 @@ namespace System.Data.Excel.Models
             DataType = typeof(string);
         }
 
-        public ExcelColumn(string name)
+        public ExcelColumn([NotNull] string name)
             : this()
         {
             Name = name;
         }
 
-        public ExcelColumn(ExcelTable table, string name)
+        public ExcelColumn([NotNull] ExcelTable table, [NotNull] string name)
             : this(name)
         {
             Table = table;
@@ -48,5 +49,10 @@ namespace System.Data.Excel.Models
         /// Column's parent table
         /// </summary>
         public ExcelTable Table { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0}, {1}", Name, DataType.Name);
+        }
     }
 }

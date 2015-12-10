@@ -9,13 +9,13 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using JetBrains.Annotations;
 
 namespace System.Data.Excel.Models
 {
     /// <summary>
     /// Represents Excel table
     /// </summary>
-    [DefaultProperty("Name")]
     internal class ExcelTable
     {
         public ExcelTable()
@@ -23,7 +23,7 @@ namespace System.Data.Excel.Models
             Columns = new List<ExcelColumn>();
         }
 
-        public ExcelTable(string name)
+        public ExcelTable([NotNull] string name)
             :this()
         {
             Name = name;
@@ -35,5 +35,10 @@ namespace System.Data.Excel.Models
         public string Name { get; set; }
 
         public List<ExcelColumn> Columns { get; }
+
+        public override string ToString()
+        {
+            return Name ?? string.Empty;
+        }
     }
 }
