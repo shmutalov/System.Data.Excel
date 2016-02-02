@@ -81,7 +81,7 @@ namespace System.Data.Excel
         /// error can be thrown, cause resources are busy. We will add databases to rebuild
         /// to that set. Remove database from set after rebuilt complete.
         /// </summary>
-        private static ConcurrentHashSet<string> _reloadingDatabases = new ConcurrentHashSet<string>();
+        private static readonly ConcurrentHashSet<string> ReloadingDatabases = new ConcurrentHashSet<string>();
 
         #endregion
 
@@ -162,10 +162,10 @@ namespace System.Data.Excel
                 // if database already marked as "loading", 
                 // we must wait for operation complete
 
-                if (_reloadingDatabases.Contains(loweredDatabaseName))
+                if (ReloadingDatabases.Contains(loweredDatabaseName))
                 {
                     // wait until database unmarked
-                    while (_reloadingDatabases.Contains(loweredDatabaseName))
+                    while (ReloadingDatabases.Contains(loweredDatabaseName))
                     {
                     }
                 }
@@ -180,7 +180,7 @@ namespace System.Data.Excel
                 try
                 {
                     // mark database as "loading"
-                    _reloadingDatabases.Add(loweredDatabaseName);
+                    ReloadingDatabases.Add(loweredDatabaseName);
 
                     _storage.CreateDatabase(database, _storegeDir);
 
@@ -208,7 +208,7 @@ namespace System.Data.Excel
                 finally
                 {
                     // unmark database as "loading"
-                    _reloadingDatabases.Remove(loweredDatabaseName);
+                    ReloadingDatabases.Remove(loweredDatabaseName);
                 }
 
             }
